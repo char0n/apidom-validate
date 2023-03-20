@@ -47,7 +47,7 @@ const mapDiagnostics = (diagnostics) => {
   // print result
   core.info(`\u001b[1mApiDOM lint ${definitionFile}`)
   core.info('')
-  core.info(`\u001b[1m${definitionFile}`)
+  core.info(`\u001b[4m${definitionFile}`)
   core.info(mapDiagnostics(validationResult))
 
   // print summary
@@ -55,7 +55,7 @@ const mapDiagnostics = (diagnostics) => {
     ? '\u001b[1;31m'
     : warnings.length > 0
     ? '\u001b[1;33m'
-    : ''
+    : '\u001b[1m'
   core.info(`${color}${errors.length + warnings.length} problems (${errors.length} error, ${warnings.length} warnings, ${information.length} information, ${hints.length} hints)`)
 
   // fail the action on errors
