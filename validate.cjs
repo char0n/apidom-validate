@@ -37,7 +37,10 @@ const mapDiagnostics = (diagnostics) => {
 
 (async () => {
   const validationResult = await languageService.doValidation(textDocument);
-  const hasValidationErrors = validationResult.some((diagnostic) => diagnostic.severity === 1);
+  const errors = validationResult.filter((diagnostic) => diagnostic.severity === 1)
+  const warning = validationResult.filter((diagnostic) => diagnostic.severity === 2)
+  const information = validationResult.filter((diagnostic) => diagnostic.severity === 3)
+  const hints = validationResult.filter((diagnostic) => diagnostic.severity === 4)
 
   languageService.terminate();
 
@@ -45,8 +48,10 @@ const mapDiagnostics = (diagnostics) => {
   core.info('')
   core.info(`\u001b[1m${definitionFile}`)
   core.info(mapDiagnostics(validationResult))
+  core.info('')
+  core.info(`\\033[38;5;16;48;5;231m${errors.length + warning.length} problems (${errors.length} error, ${warning.length} warnings, ${information.length} information, ${hints.length} hints) \\033[0m`)
 
-  if (hasValidationErrors) {
-    core.setFailed('\u001b[38;2;255;0;1mDefinition contains errors.');
+  if (errors.length > 0) {
+    core.setFailed('');
   }
 })();
