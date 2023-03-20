@@ -39,6 +39,8 @@ const mapDiagnostics = (diagnostics) => {
   const validationResult = await languageService.doValidation(textDocument);
   const hasValidationErrors = validationResult.some((diagnostic) => diagnostic.severity === 1);
 
+  languageService.terminate();
+
   core.info(`\u001b[1mApiDOM lint ${definitionFile}`)
   core.info('')
   core.info(`\u001b[1m${definitionFile}`)
