@@ -49,7 +49,7 @@ const mapDiagnostics = (diagnostics) => {
   core.info(`\u001b[1m${definitionFile}`)
   core.info(mapDiagnostics(validationResult))
   core.info('')
-  core.info(`\\e[33m${errors.length + warning.length} problems (${errors.length} error, ${warning.length} warnings, ${information.length} information, ${hints.length} hints)`)
+  core.info(`\u001b[33m${errors.length + warning.length} problems (${errors.length} error, ${warning.length} warnings, ${information.length} information, ${hints.length} hints)`)
 
   if (errors.length > 0) {
     core.setFailed('');
