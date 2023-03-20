@@ -26,7 +26,7 @@ const mapDiagnostic = ({ range, severity, code, message }) => ({
   severity: mapSeverity(severity),
   code,
   message,
-})
+});
 const mapDiagnostics = (diagnostics) => {
   const ts = new Transform({ transform(chunk, enc, cb) { cb(null, chunk) } });
   const logger = new Console({ stdout: ts });
@@ -37,26 +37,28 @@ const mapDiagnostics = (diagnostics) => {
 
 (async () => {
   const validationResult = await languageService.doValidation(textDocument);
-  const errors = validationResult.filter((diagnostic) => diagnostic.severity === 1)
-  const warnings = validationResult.filter((diagnostic) => diagnostic.severity === 2)
-  const information = validationResult.filter((diagnostic) => diagnostic.severity === 3)
-  const hints = validationResult.filter((diagnostic) => diagnostic.severity === 4)
+  const errors = validationResult.filter((diagnostic) => diagnostic.severity === 1);
+  const warnings = validationResult.filter((diagnostic) => diagnostic.severity === 2);
+  const information = validationResult.filter((diagnostic) => diagnostic.severity === 3);
+  const hints = validationResult.filter((diagnostic) => diagnostic.severity === 4);
 
   languageService.terminate();
 
   // print result
-  core.info(`\u001b[1mApiDOM lint ${definitionFile}`)
-  core.info('')
-  core.info(`\u001b[4m${definitionFile}`)
-  core.info(mapDiagnostics(validationResult))
+  if (validationResult.length > 0) {
+    core.info(`\u001b[1mApiDOM lint ${definitionFile}`);
+    core.info('');
+    core.info(`\u001b[4m${definitionFile}`);
+    core.info(mapDiagnostics(validationResult));
+  }
 
   // print summary
   const color = errors.length > 0
     ? '\u001b[1;31m'
     : warnings.length > 0
     ? '\u001b[1;33m'
-    : '\u001b[1m'
-  core.info(`${color}${errors.length + warnings.length} problems (${errors.length} error, ${warnings.length} warnings, ${information.length} information, ${hints.length} hints)`)
+    : '\u001b[1m';
+  core.info(`${color}${errors.length + warnings.length} problems (${errors.length} error, ${warnings.length} warnings, ${information.length} information, ${hints.length} hints)`);
 
   // fail the action on errors
   if (errors.length > 0) {
