@@ -6,7 +6,7 @@ SHELL ["/bin/bash", "-c"]
 WORKDIR /workspace
 
 # install dependencies
-RUN npm install @swagger-api/apidom-ls @actions/core
+RUN npm install @swagger-api/apidom-ls @actions/core vscode-languageserver-textdocument
 
 COPY validate.cjs .
 ENTRYPOINT ["node", "/workspace/validate.cjs"]
