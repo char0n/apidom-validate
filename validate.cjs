@@ -38,19 +38,27 @@ const mapDiagnostics = (diagnostics) => {
 (async () => {
   const validationResult = await languageService.doValidation(textDocument);
   const errors = validationResult.filter((diagnostic) => diagnostic.severity === 1)
-  const warning = validationResult.filter((diagnostic) => diagnostic.severity === 2)
+  const warnings = validationResult.filter((diagnostic) => diagnostic.severity === 2)
   const information = validationResult.filter((diagnostic) => diagnostic.severity === 3)
   const hints = validationResult.filter((diagnostic) => diagnostic.severity === 4)
 
   languageService.terminate();
 
+  // print result
   core.info(`\u001b[1mApiDOM lint ${definitionFile}`)
   core.info('')
   core.info(`\u001b[1m${definitionFile}`)
   core.info(mapDiagnostics(validationResult))
-  core.info('')
-  core.info(`\u001b[33m${errors.length + warning.length} problems (${errors.length} error, ${warning.length} warnings, ${information.length} information, ${hints.length} hints)`)
 
+  // print summary
+  const color = errors.length > 0
+    ? '\u001b[1;31m'
+    : warnings.length > 0
+    ? '\u001b[1;33m'
+    : ''
+  core.info(`${color}${errors.length + warnings.length} problems (${errors.length} error, ${warnings.length} warnings, ${information.length} information, ${hints.length} hints)`)
+
+  // fail the action on errors
   if (errors.length > 0) {
     core.setFailed('');
   }
