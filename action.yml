@@ -1,5 +1,5 @@
 name: ApiDOM Validator
-description: This GitHub Actions validates OpenAPI 3.x.y / AsyncAPI 2.x definition file using ApiDOM Language Service.
+description: This GitHub Action validates OpenAPI 3.x.y / AsyncAPI 2.x definition file using ApiDOM Language Service.
 inputs:
   definition-file:
     description: Path to definition file
