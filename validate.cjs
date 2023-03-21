@@ -36,6 +36,8 @@ const mapDiagnostics = (diagnostics) => {
 };
 
 (async () => {
+  core.info(`\u001b[1mApiDOM lint ${definitionFile}`);
+
   const validationResult = await languageService.doValidation(textDocument);
   const errors = validationResult.filter((diagnostic) => diagnostic.severity === 1);
   const warnings = validationResult.filter((diagnostic) => diagnostic.severity === 2);
@@ -46,7 +48,6 @@ const mapDiagnostics = (diagnostics) => {
 
   // print result
   if (validationResult.length > 0) {
-    core.info(`\u001b[1mApiDOM lint ${definitionFile}`);
     core.info('');
     core.info(`\u001b[4m${definitionFile}`);
     core.info(mapDiagnostics(validationResult));
@@ -57,7 +58,7 @@ const mapDiagnostics = (diagnostics) => {
     ? '\u001b[1;31m'
     : warnings.length > 0
     ? '\u001b[1;33m'
-    : '\u001b[1m';
+    : '\u001b[1;1m';
   core.info(`${color}${errors.length + warnings.length} problems (${errors.length} error, ${warnings.length} warnings, ${information.length} information, ${hints.length} hints)`);
 
   // fail the action on errors
