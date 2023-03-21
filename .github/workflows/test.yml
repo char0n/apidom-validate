@@ -1,6 +1,10 @@
 name: Test ApiDOM Validator
 
 on:
+  push:
+    branches:
+      - main
+
   workflow_dispatch:
     branches:
       - main
