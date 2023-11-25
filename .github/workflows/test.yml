@@ -12,7 +12,6 @@ on:
 jobs:
   test_github_action:
     runs-on: ubuntu-latest
-    continue-on-error: true
     outputs:
       output1: ${{ steps.test1.outcome }}
       output2: ${{ steps.test2.outcome }}
@@ -25,6 +24,7 @@ jobs:
         uses: char0n/apidom-validate@main
         with:
           definition-file: ./.github/workflows/fixtures/openapi.json
+
       - id: test2
         name: "Test 2: Validate at Severity level 4 (Hints)"
         if: success() || failure()
@@ -32,6 +32,7 @@ jobs:
         with:
           definition-file: ./.github/workflows/fixtures/openapi.json
           fails-on: 4
+        continue-on-error: true
 
   verify_outcomes:
     needs: test_github_action
