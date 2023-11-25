@@ -27,6 +27,13 @@ Validation rules are exactly the same as the one that https://editor-next.swagge
 
 **Required** Path to definition file.
 
+## `fails-on`
+
+Severity level at which to fail action. Default `1`, if not specified.
+- `1`: Fails if **error** messages exist in validation output
+- `2`: Fails if **error** or **warning** messages exist in validation output
+- `3`: Fails if **error**, **warning** or **information** messages exist in validation output
+- `4`: Fails if **error**, **warning**, **information** or **hint** messages exist in validation output
 
 ## Example usage
 
@@ -34,4 +41,5 @@ Validation rules are exactly the same as the one that https://editor-next.swagge
 uses: char0n/apidom-validate@v1
 with:
   definition-file: 'path/to/my/openapi.yaml'
+  fails-on: 2
 ```

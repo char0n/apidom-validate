@@ -189,7 +189,8 @@
                 "available",
                 "pending",
                 "sold"
-              ]
+              ],
+              "nullable": "true"
             }
           }
         ],

@@ -12,11 +12,45 @@ on:
 jobs:
   test_github_action:
     runs-on: ubuntu-latest
+    continue-on-error: true
+    outputs:
+      output1: ${{ steps.test1.outcome }}
+      output2: ${{ steps.test2.outcome }}
 
     steps:
       - uses: actions/checkout@v2
-      - uses: char0n/apidom-validate@main
+
+      - id: test1
+        name: "Test 1: Validate at Severity level 1 (Errors)"
+        uses: char0n/apidom-validate@main
         with:
           definition-file: ./.github/workflows/fixtures/openapi.json
+      - id: test2
+        name: "Test 2: Validate at Severity level 4 (Hints)"
+        if: success() || failure()
+        uses: char0n/apidom-validate@main
+        with:
+          definition-file: ./.github/workflows/fixtures/openapi.json
+          fails-on: 4
 
+  verify_outcomes:
+    needs: test_github_action
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Compare Expected vs Actual Outcomes
+        run: |
+          echo ""
+          echo " Test | Definition File | Fails On Level | Expected Outcome | Actual Outcome"
+          echo "------|-----------------|----------------|------------------|----------------"
+          echo "   1  |  openapi.json   |       1        |     success      |    ${{ needs.test_github_action.outputs['output1'] }}"
+          echo "   2  |  openapi.json   |       4        |     failure      |    ${{ needs.test_github_action.outputs['output2'] }}"
+          echo ""
 
+          if [ "${{ needs.test_github_action.outputs['output1'] }}" == "success" ] && [ "${{ needs.test_github_action.outputs['output2'] }}" == "failure" ] ; then
+            echo "SUCCESS: Actual outcomes match expected outcomes."
+            exit 0
+          else
+            echo "FAILED: Actual outcomes do not match expected outcomes."
+            exit 1
+          fi
