@@ -1,6 +1,6 @@
 # ApiDOM Validator GitHub Action
 
-This GitHub Actions validates [OpenAPI](https://github.com/OAI/OpenAPI-Specification/tree/main/versions) 
+This GitHub Action validates [OpenAPI](https://github.com/OAI/OpenAPI-Specification/tree/main/versions) 
 3.x.y / [AsyncAPI](https://github.com/OAI/OpenAPI-Specification/tree/main/versions) 2.x definition file
 using [ApiDOM Language Service](https://github.com/swagger-api/apidom).
 
