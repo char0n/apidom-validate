@@ -1,5 +1,14 @@
 # ApiDOM Validator GitHub Action
 
+---
+
+> [!WARNING]  
+> This repository and it's GitHub Action has been transferred to [swaggerexpert/apidom-validate](https://github.com/swaggerexpert/apidom-validate).
+> Please migrate to [swaggerexpert/apidom-validate](https://github.com/swaggerexpert/apidom-validate) ASAP. This repository is here only for backward
+> compatible reason and is not going to be maintained anymore. 
+
+---
+
 This GitHub Action validates [OpenAPI 2.0](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/2.0.md), [OpenAPI](https://github.com/OAI/OpenAPI-Specification/tree/main/versions) 
 3.x.y and [AsyncAPI](https://github.com/OAI/OpenAPI-Specification/tree/main/versions) 2.x definition file using [ApiDOM Language Service](https://github.com/swagger-api/apidom).
 
